@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-serif: "Noto Serif SC", "Songti SC", "SimSun", serif;
+  --cream: #f8f4ed;
+  --ink: #3d2817;
+  --cta: #c41e3a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-cream text-ink antialiased;
+  font-family: var(--font-serif);
+}
+
+/* 轻微纸张纹理：纯 CSS，无外部资源 */
+.paper-texture {
+  background-color: #fffbf5;
+  background-image: radial-gradient(rgba(61, 40, 23, 0.045) 1px, transparent 1px);
+  background-size: 10px 10px;
+}
+
+.marker-border {
+  border-radius: 255px 18px 225px 18px / 18px 225px 18px 255px;
+  border: 2.5px solid #3d2817;
+  box-shadow: 3px 4px 0 rgba(61, 40, 23, 0.07);
+}
+
+.marker-border-soft {
+  border-radius: 235px 22px 215px 22px / 22px 215px 22px 235px;
+  border: 2px solid rgba(61, 40, 23, 0.85);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
