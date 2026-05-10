@@ -12,7 +12,8 @@
 **在线网站**:[https://career-war-room-omega.vercel.app](https://career-war-room-omega.vercel.app)  
 **GitHub 仓库**:[https://github.com/Alice-like-study/career-war-room](https://github.com/Alice-like-study/career-war-room)  
 **Skill 包下载**:[v1.0.0 Release](https://github.com/Alice-like-study/career-war-room/releases/download/v1.0.0/career-war-room-skill-v1.0.0.zip.zip)
-⭐ ## 💭 开发初衷
+
+## 💭 开发初衷
 
 我做这个产品的契机,不是某个商业洞察,而是一个意外。
 
@@ -89,7 +90,6 @@ career-war-room/
 - **大模型**:moonshot.kimi-k2.6(旗舰)+ minimax.m2.5(轻量,Lumen 用)
 - **官网**:Next.js 14 + Tailwind CSS + TypeScript
 - **部署**:Vercel(Hobby 免费版)
-- 
 
 ## 📂 项目结构
 
