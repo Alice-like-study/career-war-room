@@ -21,16 +21,16 @@ export function HeroSection() {
         <p className="mx-auto mt-6 max-w-3xl text-balance text-lg font-semibold text-ink/90 sm:text-xl">
           7 位 AI 军师，30 分钟生成你的《校招作战地图》
         </p>
-        <div className="mx-auto mt-9 grid w-full max-w-5xl grid-cols-4 gap-x-3 sm:gap-x-6">
+        <div className="mx-auto mt-9 grid w-full max-w-5xl grid-cols-2 gap-x-3 gap-y-4 sm:grid-cols-4 sm:gap-x-6 sm:gap-y-0">
           {heroMetrics.map((metric) => (
             <div
               key={`${metric.value}-${metric.label}`}
               className="flex min-h-[92px] flex-col items-center justify-center px-2 sm:px-3"
             >
-              <p className="whitespace-nowrap text-5xl font-bold leading-none text-[#8B2C2C]">
+              <p className="whitespace-nowrap text-4xl font-bold leading-none text-[#8B2C2C] sm:text-5xl">
                 {metric.value}
               </p>
-              <p className="mt-2 text-[14px] font-semibold text-[#1F1A17]">{metric.label}</p>
+              <p className="mt-2 text-[14px] font-semibold text-[#1F1A17] sm:text-[15px]">{metric.label}</p>
             </div>
           ))}
         </div>
