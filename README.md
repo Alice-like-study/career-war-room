@@ -9,8 +9,9 @@
 
 「应届生求职作战部」是一个基于 EasyClaw 平台搭建的多 Agent 协作系统,由 1 位总指挥(Compass)+ 6 位专职军师组成,通过 sessions_send / file_share / context_inherit 等协议实现真正的团队协作。
 
-**演示地址**:career-war-room-omega.vercel.app
-
+**在线网站**:[https://career-war-room-omega.vercel.app](https://career-war-room-omega.vercel.app)  
+**GitHub 仓库**:[https://github.com/Alice-like-study/career-war-room](https://github.com/Alice-like-study/career-war-room)  
+**Skill 包下载**:[v1.0.0 Release](https://github.com/Alice-like-study/career-war-room/releases/download/v1.0.0/career-war-room-skill-v1.0.0.zip.zip)
 ⭐ ## 💭 开发初衷
 
 我做这个产品的契机,不是某个商业洞察,而是一个意外。
@@ -66,7 +67,21 @@
 
 全程 Lumen 异步监测情绪信号,主动介入
 ```
+## 📦 Skill 包内容(v1.0.0)
 
+[下载 v1.0.0](https://github.com/Alice-like-study/career-war-room/releases/download/v1.0.0/career-war-room-skill-v1.0.0.zip.zip) 后解压,得到的文件结构:
+career-war-room/
+├── SKILL.md          # 标准 EasyClaw Skill 入口(带 YAML frontmatter)
+├── README.md         # 用户说明
+├── INSTALL.md        # 命令行 + 自然语言双安装指南
+└── agents/           # 6 位子 Agent 配置
+├── prism/        # 棱镜 · 自我画像官
+├── scope/        # 望远镜 · 行业匹配官
+├── scalpel/      # 手术刀 · 简历医生
+├── arena/        # 沙盘 · 模拟面试官
+├── balance/      # 天平 · Offer 决策官
+└── lumen/        # 暖灯 · 情绪陪跑官
+每位 Agent 都包含 `IDENTITY.md`(身份定义)和 `SOUL.md`(人设、方法论、提问库、输出格式),完全符合 OpenClaw / EasyClaw 官方 Skill 规范。
 ## 💻 技术栈
 
 - **AI 平台**:EasyClaw(基于 OpenClaw 框架)
@@ -74,6 +89,7 @@
 - **大模型**:moonshot.kimi-k2.6(旗舰)+ minimax.m2.5(轻量,Lumen 用)
 - **官网**:Next.js 14 + Tailwind CSS + TypeScript
 - **部署**:Vercel(Hobby 免费版)
+- 
 
 ## 📂 项目结构
 
@@ -96,16 +112,27 @@ career-war-room/
 └── README.md
 ```
 
-## 🚀 如何复现这个 Agent 团队
+## 🚀 如何安装这个 Agent 团队
 
-> ⚠️ **当前状态说明**:作战部 Skill 包尚未发布到 EasyClaw 技能市场。
-> 本仓库提供 6 个 Agent 的完整配置文件,你可以按以下步骤手动在本地 EasyClaw 中复现整套团队。
+### 方式一:一键下载 Skill 包(推荐)
 
-### 第一步:安装 EasyClaw 客户端
-访问 [easyclaw.com](https://easyclaw.com),下载对应系统的客户端,完成账号注册。
+1. **下载 Skill 包**:[v1.0.0 Release](https://github.com/Alice-like-study/career-war-room/releases/latest)
+2. **解压 ZIP** 到任意位置
+3. **按包内 `INSTALL.md` 操作**——支持命令行 + 自然语言两种安装方式
 
-### 第二步:导入 Agent 配置文件
+### 方式二:让你的主 Agent 自己安装(最省心)
+
+下载并解压 ZIP 后,直接对你的 EasyClaw 主 Agent 说:
+
+> "请安装 career-war-room Skill,Skill 包就在我下载文件夹里。
+> 帮我把 6 位子 Agent 配置好,并验证团队就位。"
+
+主 Agent 会自动完成全部安装步骤(包括复制配置、注册子 Agent、设置调度权限)。
+
+### 方式三:手动从源码加载(开发者用)
+
 本仓库 `agents-config/AGENTS.md` 文件汇总了 6 位 Agent 的完整配置:
+
 - Prism(自我画像官)
 - Scope(行业匹配官)
 - Scalpel(简历医生)
@@ -113,43 +140,33 @@ career-war-room/
 - Balance(Offer 决策官)
 - Lumen(情绪陪跑官)
 
-每位 Agent 都包含 IDENTITY(身份定义)和 SOUL(人设与方法论)两部分。
-直接对你的主 Agent 说:
-> "请按 agents-config/AGENTS.md 的内容,创建 6 位子 Agent。"
+每位 Agent 都包含 IDENTITY(身份定义)和 SOUL(人设与方法论)两部分。把每位 Agent 的两部分内容,分别写入 EasyClaw 工作区对应目录:
+~/.easyclaw/agents/prism/IDENTITY.md
+~/.easyclaw/agents/prism/SOUL.md
+... (依此类推 6 位 Agent)
 
-主 Agent 会自动完成创建。
+### 开始使用
 
-### 第三步:配置主 Agent 调度权限
-在 EasyClaw 客户端,对你的主 Agent(Compass)说:
-> "请把以下 6 个子 Agent 加入你的 allowAgents 列表:prism, scope, scalpel, arena, balance, lumen"
+安装完成后,对主 Agent 说:
 
-或手动执行 CLI 命令:
-\`\`\`bash
-easyclaw config set agents.list[0].subagents.allowAgents \
-  '["prism","scope","scalpel","arena","balance","lumen"]' --json
-\`\`\`
-
-### 第四步:验证团队就位
-\`\`\`bash
-easyclaw agents list
-\`\`\`
-应看到 7 个 Agent 全部在线。
-
-### 第五步:开始使用
-对主 Agent(Compass)说:
 > "我是应届生,在求职中遇到困难,请帮我。"
 
-Compass 会自动分诊并调度对应子 Agent。
+Compass 会自动分诊并调度对应子 Agent,30 分钟内输出一份《个人校招作战地图》。
 
 ## 🗺️ 路线图
 
+### ✅ 已完成
 - [x] 6 位 Agent + 1 位总指挥的完整人设设计
 - [x] Pipeline 协作流程跑通
-- [x] 产品官网(Next.js + Vercel)
-- [ ] 把 6 位 Agent 打包成 EasyClaw Skill 包,实现一键安装
-- [ ] 提交到 EasyClaw 技能市场
+- [x] 产品官网(Next.js + Vercel,已部署)
+- [x] **将 6 位 Agent 打包成标准 EasyClaw Skill 包(v1.0.0,2026.5)**
+- [x] **GitHub Releases 永久下载渠道**
+
+
+### 🔮 长期规划
 - [ ] 加入更多场景:跳槽、留学申请、考研复试
 - [ ] 接入更多平台(微信、飞书、Telegram)
+- [ ] 沉淀真实用户案例库
 
 ## 🙏 致谢
 
