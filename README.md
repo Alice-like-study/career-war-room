@@ -11,6 +11,28 @@
 
 **演示地址**:career-war-room-cbw47etzm-alice-s-projects2.vercel.app
 
+⭐ ## 💭 开发初衷
+
+我做这个产品的契机,不是某个商业洞察,而是一个意外。
+
+5 月某个凌晨,我刚把 6 位 Agent 在 EasyClaw 上搭好,按计划应该用一份"虚拟应届生小李"的人物设定测试整条 Pipeline。但我没注意,Prism 第一轮提问时,我下意识用了自己的真实经历回答。
+
+5 轮对话之后,Prism 输出了一份画像,其中有一句话戳中了我:
+
+> "你不是被'成功结果'驱动,
+> 而是被'把模糊变清晰、把不可能变可能'的过程驱动。"
+> —— Prism · 棱镜 给作者的画像,2026.5
+
+没有任何朋友、家人、HR 在 5 轮对话内,准确地说出过这句话。但我自己心里知道:它说对了。
+
+那一刻我意识到,作战部的真正价值,不是"把求职流程自动化",而是它能在一个被父母、KPI、同辈压力裹挟的应届生面前,**用 5 轮对话告诉对方:你是谁,你想要什么**。
+
+应届生最缺的从来不是信息,是有人安静地、不带评价地、帮他把内心的混乱拆解成一份可执行的地图。
+
+7 位 AI 军师做不到代替你做选择,但它们能让选择不再孤独。
+
+这就是我做这个产品的原因。
+
 ## 🏗️ 团队架构
 
 | 角色 | 中文名 | 职责 |
@@ -76,26 +98,41 @@ career-war-room/
 
 ## 🚀 如何复现这个 Agent 团队
 
+> ⚠️ **当前状态说明**:作战部 Skill 包尚未发布到 EasyClaw 技能市场。
+> 本仓库提供 6 个 Agent 的完整配置文件,你可以按以下步骤手动在本地 EasyClaw 中复现整套团队。
+
 ### 第一步:安装 EasyClaw 客户端
 访问 [easyclaw.com](https://easyclaw.com),下载对应系统的客户端,完成账号注册。
 
-### 第二步:导入 Agent 配置
-将本仓库 `agents-config/` 目录下的 6 个子目录,分别复制到 EasyClaw 工作区:
-```
-~/.easyclaw/agents/
-```
+### 第二步:导入 Agent 配置文件
+本仓库 `agents-config/` 目录下有 6 个子目录,每个对应一个 Agent:
+- `prism/`(自我画像官)
+- `scope/`(行业匹配官)
+- `scalpel/`(简历医生)
+- `arena/`(模拟面试官)
+- `balance/`(Offer 决策官)
+- `lumen/`(情绪陪跑官)
 
-### 第三步:配置主 Agent 的 subagents.allowAgents
-```bash
+每个目录下有 `IDENTITY.md`(身份定义)和 `SOUL.md`(人设与方法论)。
+将这 6 个目录复制到 EasyClaw 工作区:
+\`\`\`
+~/.easyclaw/agents/
+\`\`\`
+
+### 第三步:配置主 Agent 调度权限
+在 EasyClaw 客户端,对你的主 Agent(Compass)说:
+> "请把以下 6 个子 Agent 加入你的 allowAgents 列表:prism, scope, scalpel, arena, balance, lumen"
+
+或手动执行 CLI 命令:
+\`\`\`bash
 easyclaw config set agents.list[0].subagents.allowAgents \
   '["prism","scope","scalpel","arena","balance","lumen"]' --json
-```
+\`\`\`
 
 ### 第四步:验证团队就位
-```bash
+\`\`\`bash
 easyclaw agents list
-```
-
+\`\`\`
 应看到 7 个 Agent 全部在线。
 
 ### 第五步:开始使用
@@ -104,25 +141,15 @@ easyclaw agents list
 
 Compass 会自动分诊并调度对应子 Agent。
 
-## 🎬 演示
+## 🗺️ 路线图
 
-详细演示请见:
-- 在线网站:[Vercel 部署地址](#)
-- 演示视频:`demo/demo.mp4`(1 分 30 秒)
-
-## 📝 设计理念
-
-### 为什么是"多 Agent"而不是"一个全能 Agent"?
-
-- 一个 Agent 试图什么都做,会陷入"什么都做但什么都不精"的陷阱
-- 6 位 Agent 分工,每位都有独立的工作区(workspace)、独立的记忆(memory)、独立的人设(SOUL.md)、独立的提示策略
-- 通过 sessions_send 实现数据流转,通过 file_share 实现产出沉淀,通过 context_inherit 实现上下文复用
-
-### 为什么用 EasyClaw 而不是 Coze / Dify?
-
-- EasyClaw 原生支持持久 Agent + 子 Agent 双模式,这是真正的"多 Agent"
-- Coze / Dify 本质是工作流(workflow),Agent 之间是"调用",不是"协作"
-- EasyClaw 的本地沙盒 + 自然语言配置,完美匹配"非程序员也能搭团队"的产品愿景
+- [x] 6 位 Agent + 1 位总指挥的完整人设设计
+- [x] Pipeline 协作流程跑通
+- [x] 产品官网(Next.js + Vercel)
+- [ ] 把 6 位 Agent 打包成 EasyClaw Skill 包,实现一键安装
+- [ ] 提交到 EasyClaw 技能市场
+- [ ] 加入更多场景:跳槽、留学申请、考研复试
+- [ ] 接入更多平台(微信、飞书、Telegram)
 
 ## 🙏 致谢
 
