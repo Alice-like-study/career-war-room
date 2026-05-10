@@ -9,7 +9,7 @@
 
 「应届生求职作战部」是一个基于 EasyClaw 平台搭建的多 Agent 协作系统,由 1 位总指挥(Compass)+ 6 位专职军师组成,通过 sessions_send / file_share / context_inherit 等协议实现真正的团队协作。
 
-**演示地址**:career-war-room-cbw47etzm-alice-s-projects2.vercel.app
+**演示地址**:career-war-room-omega.vercel.app
 
 ⭐ ## 💭 开发初衷
 
