@@ -1,4 +1,6 @@
-import type { ReactNode } from "react";
+ "use client";
+
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   IconArena,
   IconBalance,
@@ -8,97 +10,181 @@ import {
   IconScope,
 } from "@/components/agent-icons";
 import { AGENT_DEMOS, type AgentDemoId } from "@/components/agent-demo-contents";
-import { AgentDemoFold } from "@/components/AgentDemoFold";
-import { WhiteboardCard } from "@/components/ui/WhiteboardCard";
 
 const agents: {
+  key: AgentDemoId;
   icon: ReactNode;
   title: string;
-  demoId: AgentDemoId;
-  demoName: string;
-  canDo: string;
-  principles: string;
+  oneLiner: string;
+  quote: string;
+  canDo: [string, string, string];
   tags: string[];
-  slogan: string;
+  collaboration: {
+    direction: "to" | "from" | "all";
+    target: string;
+    note: string;
+  }[];
+  preview: string;
+  modalTitle?: string;
 }[] = [
   {
+    key: "prism",
     icon: <IconPrism />,
     title: "Prism · 棱镜 · 自我画像官",
-    demoId: "prism",
-    demoName: "Prism",
-    canDo:
-      "5 轮情景化追问 / 挖掘真实兴趣 / 提取核心能力 / 排序价值观 / 锁定不可妥协项",
-    principles:
-      '不问「你的兴趣是什么」这种废话 / 用具体行为追问 / 5-7 轮内出报告 / 报告要有可被引用的细节',
-    tags: ["画像挖掘", "价值观", "能力盘点"],
-    slogan: '把模糊的「我不知道我适合什么」，变成清晰的「你是 X 型选手」',
+    oneLiner: "把真实行为拆成可复用的画像证据链。",
+    quote: "把「我不知道我适合什么」，变成「你是 X 型选手」。",
+    canDo: ["· 5 轮追问锁定画像", "· 提炼能力与价值锚", "· 输出可引用证据链"],
+    tags: ["画像挖掘", "价值锚", "证据链"],
+    collaboration: [
+      { direction: "to", target: "Compass", note: "画像输入" },
+      { direction: "to", target: "Scope", note: "行业匹配" },
+    ],
+    preview: "📜 实录:小李 23 届，GPA 3.3，先从一次深夜改简历追问起...",
   },
   {
+    key: "scope",
     icon: <IconScope />,
     title: "Scope · 望远镜 · 行业匹配官",
-    demoId: "scope",
-    demoName: "Scope",
-    canDo:
-      "基于画像匹配 Top3 赛道 / 提供起薪和成长路径 / 标注风险点 / 揭穿「看似适合实则不推荐」陷阱 / 推荐 2 个野路子方向",
-    principles:
-      "必须用画像里的具体证据 / 起薪数据基于近 1 年校招行情 / 不和稀泥不无脑推荐互联网",
-    tags: ["行业研究", "起薪", "路径规划"],
-    slogan: '把「我不知道选哪行」，变成「这 3 个赛道，你最该去这个」',
+    oneLiner: "用画像证据匹配赛道，不给模糊建议。",
+    quote: "把「我不知道选哪行」，变成「这 3 个赛道你该先打哪一个」。",
+    canDo: ["· 画像驱动 Top3 赛道", "· 给出起薪与成长路径", "· 标注高风险误判方向"],
+    tags: ["赛道匹配", "起薪图", "路径图"],
+    collaboration: [
+      { direction: "from", target: "Prism", note: "画像输入" },
+      { direction: "to", target: "Scalpel", note: "简历优化" },
+      { direction: "to", target: "Arena", note: "面试演练" },
+    ],
+    preview: "📜 实录:金融 vs 互联网的纠结，被拆成画像证据 + 起薪路径...",
   },
   {
+    key: "scalpel",
     icon: <IconScalpel />,
     title: "Scalpel · 手术刀 · 简历医生",
-    demoId: "scalpel",
-    demoName: "Scalpel",
-    canDo:
-      "诊断原简历 5 大硬伤 / STAR 法则重写 / 主动追问数字 / 针对 3 个不同行业产出 3 版简历 / 配套投递策略",
-    principles:
-      '数字必须真实不编造 / 每版简历可一键复制 / 不超过 1 页 / 不写「性格开朗」这种废话',
-    tags: ["简历重写", "STAR", "行业差异化"],
-    slogan: '把「投 80 份只回 8 个」，变成「每一份都精准命中招聘视角」',
+    oneLiner: "把经历重写成招聘方能秒读的证据句。",
+    quote: "把「经历很多但说不清」，变成「一眼可评估的成果证据」。",
+    canDo: ["· 30 秒锁定简历硬伤", "· STAR 逐句重写经历", "· 追问数字补齐结果证据"],
+    tags: ["简历刀", "STAR", "数字证"],
+    collaboration: [
+      { direction: "from", target: "Scope", note: "目标行业" },
+      { direction: "to", target: "Arena", note: "面试演练" },
+    ],
+    preview: "📜 实录:一句「负责运营」被重写成完整 STAR 结果链条...",
   },
   {
+    key: "arena",
     icon: <IconArena />,
     title: "Arena · 沙盘 · 模拟面试官",
-    demoId: "arena",
-    demoName: "Arena",
-    canDo:
-      "扮演目标行业面试官 / 5 轮模拟面试 / 三段式反馈（优点/硬伤/改写示范） / 至少 1 道压力面 / 输出《面试通关手册》",
-    principles:
-      "一次只出一题 / 不无意义鼓励 / 先听用户答再给改写 / 改写必须用 STAR 框架",
-    tags: ["模拟面试", "STAR", "压力测试"],
-    slogan: '把「面试一紧张就背稿子」，变成「结构化作答的肌肉记忆」',
+    oneLiner: "按真实流程压测，让表达形成肌肉记忆。",
+    quote: "把「临场脑空白」，变成「可复用的结构化回答」。",
+    canDo: ["· 5 轮真实面试模拟", "· 三段式逐句反馈", "· 压力题与复盘手册"],
+    tags: ["压力面", "逐句改", "复盘册"],
+    collaboration: [
+      { direction: "from", target: "Scalpel", note: "简历素材" },
+      { direction: "to", target: "Lumen", note: "情绪兜底" },
+    ],
+    preview: "📜 实录:第 1 题自我介绍，被拆成优点/硬伤/改写示范...",
   },
   {
+    key: "balance",
     icon: <IconBalance />,
     title: "Balance · 天平 · Offer 决策官",
-    demoId: "balance",
-    demoName: "Balance",
-    canDo:
-      '7 维度权重表收集 / 加权评分计算 / 给出「理性最优解」 / 反直觉提醒（看穿真实内心） / 引导冷静 24 小时',
-    principles:
-      '数字必须算清楚 / 不替用户做决定 / 反直觉提醒必须给 / 绝不说「两个都不错你自己选」',
-    tags: ["Offer 决策", "加权评分", "内心矛盾"],
-    slogan: '把「我妈让我选 A 但我想选 B」，变成「看见你内心真正的权重」',
+    oneLiner: "让情绪与现实同屏，算出可解释的取舍。",
+    quote: "把「别人都替我选」，变成「我看见自己真正的权重」。",
+    canDo: ["· 7 维度权重:行业前景/抗压度/通勤距离", "· 薪资/学习曲线/直属上级/价值感", "· 输出理性分与反直觉提醒"],
+    tags: ["权重表", "双方案", "反直觉"],
+    collaboration: [
+      { direction: "from", target: "Compass", note: "全局视图" },
+      { direction: "to", target: "Lumen", note: "决策焦虑" },
+    ],
+    preview: "📜 实录:字节运营 vs AI 产品，被拆成 7 维加权评分表...",
+    modalTitle: "📜 一段 Balance 给出的真实 Offer 决策表",
   },
   {
+    key: "lumen",
     icon: <IconLumen />,
     title: "Lumen · 暖灯 · 情绪陪跑官",
-    demoId: "lumen",
-    demoName: "Lumen",
-    canDo:
-      "全程异步监测 / 识别 4 类情绪信号 / CBT 三步法介入（命名→拆解→最小行动） / 极端信号引导专业资源",
-    principles:
-      '不哄不教训 / 一次只给一个最小行动 / 不刷「加油宝宝你最棒」鸡汤 / 短句无感叹号',
-    tags: ["情绪陪跑", "CBT", "异步监测"],
-    slogan: '把「凌晨 2 点改简历的崩溃瞬间」，变成「10 分钟之内可以做的小事」',
+    oneLiner: "在崩溃边缘时兜底，把人拉回可行动状态。",
+    quote: "把「凌晨崩溃自我否定」，变成「10 分钟可执行的小行动」。",
+    canDo: ["· 凌晨情绪信号识别", "· 12 步异步陪跑(CBT 框架)", "· 自我效能重建话术"],
+    tags: ["情绪陪跑", "CBT", "异步监听", "信号识别"],
+    collaboration: [{ direction: "all", target: "所有 Agent", note: "异步监听情绪信号" }],
+    preview: "🌙 实录:用户凌晨发「又投了一份,还是没消息」,Lumen 拆出...",
   },
 ];
 
+const agentAvatarMap: Record<string, string> = {
+  Prism: "△",
+  Scope: "⊙",
+  Scalpel: "⚔",
+  Arena: "⚒",
+  Balance: "⚖",
+  Lumen: "💡",
+  Compass: "🧭",
+  "所有 Agent": "✦",
+};
+
+function clampTwoLinesStyle() {
+  return {
+    display: "-webkit-box",
+    WebkitLineClamp: 2,
+    WebkitBoxOrient: "vertical" as const,
+    overflow: "hidden",
+  };
+}
+
+function CollaborationFlow({
+  links,
+}: {
+  links: {
+    direction: "to" | "from" | "all";
+    target: string;
+    note: string;
+  }[];
+}) {
+  return (
+    <div className="mt-1 flex h-[34px] items-start gap-1 overflow-hidden text-[10px] leading-tight text-ink/85 sm:text-[11px]">
+      {links.map((item) => {
+        const arrow = item.direction === "from" ? "←" : item.direction === "all" ? "↔" : "→";
+        return (
+          <div key={`${item.target}-${item.note}`} className="flex min-w-0 items-center gap-1">
+            <span className="text-xs text-[#8b2c2c]">{arrow}</span>
+            <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#8b2c2c]/35 bg-[#f7efe1] text-[11px]">
+              {agentAvatarMap[item.target] ?? "✦"}
+            </span>
+            <span className="truncate whitespace-nowrap">
+              {item.target}
+              <span className="text-ink/60">({item.note})</span>
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export function AgentsSection() {
+  const [activeDemo, setActiveDemo] = useState<AgentDemoId | null>(null);
+
+  const activeAgent = useMemo(() => agents.find((agent) => agent.key === activeDemo) ?? null, [activeDemo]);
+
+  useEffect(() => {
+    if (!activeDemo) {
+      return;
+    }
+    const onEsc = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setActiveDemo(null);
+      }
+    };
+    window.addEventListener("keydown", onEsc);
+    return () => {
+      window.removeEventListener("keydown", onEsc);
+    };
+  }, [activeDemo]);
+
   return (
     <section id="agents" className="px-4 py-16 sm:py-20">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-5xl">
         <header className="text-center">
           <h2 className="text-2xl font-bold text-ink sm:text-3xl">6 位专职角色，各有绝活</h2>
           <p className="mx-auto mt-3 max-w-3xl text-base font-semibold text-ink/80 sm:text-lg">
@@ -106,40 +192,99 @@ export function AgentsSection() {
           </p>
         </header>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-6">
           {agents.map((a) => (
-            <WhiteboardCard key={a.title} icon={a.icon}>
-              <>
-                <div className="flex min-h-0 flex-1 flex-col gap-3">
-                  <h3 className="text-center text-lg font-bold leading-snug text-ink">{a.title}</h3>
-                  <div>
-                    <p className="text-xs font-bold uppercase tracking-wide text-cta">能干什么</p>
-                    <p className="mt-1 text-sm leading-relaxed text-ink/85">{a.canDo}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold uppercase tracking-wide text-cta">工作原则</p>
-                    <p className="mt-1 text-sm leading-relaxed text-ink/85">{a.principles}</p>
-                  </div>
-                  <div className="flex flex-wrap justify-center gap-2">
-                    {a.tags.map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-full border border-ink/20 bg-white/60 px-3 py-1 text-xs font-semibold text-ink/80"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                  <p className="border-t border-ink/10 pt-3 text-center text-sm font-semibold italic leading-relaxed text-ink">
-                    {a.slogan}
-                  </p>
+            <article
+              key={a.title}
+              className="group flex min-h-[510px] flex-col overflow-hidden rounded-xl border border-[#c9a876] bg-[#fffbf5] shadow-[6px_6px_0_rgba(139,44,44,0.15)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[8px_10px_0_rgba(139,44,44,0.2)]"
+            >
+              <div className="flex h-[120px] flex-col items-center justify-center border-b border-[#d4b690] px-4 text-center">
+                <div className="mb-2 text-4xl text-ink">{a.icon}</div>
+                <h3 className="text-[22px] font-bold leading-tight text-ink">{a.title}</h3>
+                <p className="mt-1 max-w-full truncate text-[14px] italic text-ink/65">{a.oneLiner}</p>
+              </div>
+
+              <div className="h-[80px] border-b border-[#d4b690] px-4 py-3">
+                <blockquote
+                  className="h-full border-l-4 border-[#8b2c2c] bg-[#f7efe1] px-3 py-1.5 font-serif text-[16px] italic leading-6 text-ink/85"
+                  style={clampTwoLinesStyle()}
+                >
+                  {a.quote}
+                </blockquote>
+              </div>
+
+              <div className="h-[140px] border-b border-[#d4b690] px-4 py-3">
+                <p className="font-sans text-[14px] font-bold text-[#8b2c2c]">能干什么</p>
+                <ul className="mt-2 space-y-1.5 font-serif text-[14px] leading-[1.6] text-ink">
+                  {a.canDo.map((item) => (
+                    <li key={item} className="truncate">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="h-[50px] border-b border-[#d4b690] px-4 py-2">
+                <div className="flex max-h-[34px] flex-wrap gap-1.5 overflow-hidden">
+                  {a.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border border-[#8b2c2c]/70 bg-transparent px-2.5 py-0.5 text-[12px] font-semibold text-[#8b2c2c]"
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
-                <AgentDemoFold agentName={a.demoName}>{AGENT_DEMOS[a.demoId]}</AgentDemoFold>
-              </>
-            </WhiteboardCard>
+              </div>
+
+              <div className="h-[60px] border-b border-dashed border-[#c79a9a] px-4 py-2">
+                <p className="font-sans text-[14px] font-bold text-[#8b2c2c]">协作 AGENT</p>
+                <CollaborationFlow links={a.collaboration} />
+              </div>
+
+              <div className="flex h-[60px] items-center justify-between gap-3 px-4 py-2">
+                <p className="min-w-0 truncate text-[13px] italic text-ink/70">{a.preview}</p>
+                <button
+                  type="button"
+                  className="shrink-0 text-[13px] font-semibold text-[#8b2c2c] underline decoration-[#8b2c2c]/50 underline-offset-2"
+                  onClick={() => setActiveDemo(a.key)}
+                >
+                  展开 ↓
+                </button>
+              </div>
+            </article>
           ))}
         </div>
       </div>
+
+      {activeAgent ? (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 px-4"
+          onClick={() => setActiveDemo(null)}
+        >
+          <div
+            className="relative w-full max-w-[600px] rounded-xl border border-[#c9a876] bg-[#fffbf5] shadow-[6px_6px_0_rgba(139,44,44,0.15)]"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="absolute right-4 top-4 text-lg font-bold text-[#8b2c2c]"
+              onClick={() => setActiveDemo(null)}
+              aria-label="关闭"
+            >
+              ×
+            </button>
+            <div className="border-b border-[#d4b690] px-5 py-4 pr-12">
+              <h3 className="text-lg font-bold text-ink">
+                {activeAgent.modalTitle ?? `📜 一段 ${activeAgent.title.split(" · ")[0]} 的真实运行记录`}
+              </h3>
+            </div>
+            <div className="max-h-[80vh] overflow-y-auto px-5 py-4 font-serif text-[15px] leading-[1.8] text-ink/90 [&_li]:text-[15px] [&_li]:leading-[1.8] [&_p]:text-[15px] [&_p]:leading-[1.8] [&_pre]:text-[15px] [&_strong]:text-ink">
+              {AGENT_DEMOS[activeAgent.key]}
+            </div>
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 }

@@ -1,19 +1,19 @@
 const cards = [
   {
-    title: "有 offer 纠结型",
-    body: "父母让选 A 你想选 B，夜夜失眠",
+    title: "Offer 纠结星人",
+    body: "选 A 怕遗憾，选 B 怕后悔，夜夜内耗到失眠",
   },
   {
-    title: "投简历石沉大海型",
-    body: "投了 80 份只回 8 个，不知道哪里出问题",
+    title: "简历投递黑洞",
+    body: "海投 80 份仅回 8 封，找不到问题根源",
   },
   {
-    title: "面试反复挂型",
-    body: "一进面试就紧张到背稿子，3 次都挂",
+    title: "面试挂科常客",
+    body: "背稿式面试一紧张就翻车，同类型岗位连挂几次",
   },
   {
-    title: "完全迷茫无方向型",
-    body: "不知道自己适合什么，不知道从哪开始",
+    title: "校招迷茫小白",
+    body: "不知道适合什么、不知道从哪开始，全程手足无措",
   },
 ];
 
@@ -22,7 +22,7 @@ export function AudienceSection() {
     <section id="audience" className="border-t border-ink/10 bg-[#f3ece2]/70 px-4 py-16 sm:py-20">
       <div className="mx-auto max-w-5xl">
         <header className="text-center">
-          <h2 className="text-2xl font-bold text-ink sm:text-3xl">作战部为这 4 类应届生而生</h2>
+          <h2 className="text-2xl font-bold text-ink sm:text-3xl">应届生求职作战部适合谁</h2>
         </header>
 
         <div className="mt-10 grid gap-5 sm:grid-cols-2">

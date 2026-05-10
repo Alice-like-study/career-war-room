@@ -24,25 +24,36 @@ export function CompassHubDiagram() {
           <path d="M260 142 L400 228" />
         </g>
         {[
-          { cx: 120, cy: 44, t: "Prism" },
-          { cx: 260, cy: 28, t: "Scope" },
-          { cx: 400, cy: 44, t: "Scalpel" },
-          { cx: 120, cy: 236, t: "Arena" },
-          { cx: 260, cy: 252, t: "Balance" },
-          { cx: 400, cy: 236, t: "Lumen" },
+          { cx: 120, cy: 44, en: "Prism", zh: "自我画像官" },
+          { cx: 260, cy: 28, en: "Scope", zh: "行业匹配官" },
+          { cx: 400, cy: 44, en: "Scalpel", zh: "简历医生" },
+          { cx: 120, cy: 236, en: "Arena", zh: "模拟面试官" },
+          { cx: 260, cy: 252, en: "Balance", zh: "Offer决策官" },
+          { cx: 400, cy: 236, en: "Lumen", zh: "情绪陪跑官" },
         ].map((n) => (
-          <g key={n.t}>
+          <g key={n.en}>
             <circle cx={n.cx} cy={n.cy} r="28" fill="#FFFBF5" stroke="#3D2817" strokeWidth="2.2" />
             <text
               x={n.cx}
-              y={n.cy + 5}
+              y={n.cy + 1}
               textAnchor="middle"
               fill="#3D2817"
-              fontSize="11"
+              fontSize="10.5"
               fontWeight="600"
               style={{ fontFamily: "Noto Serif SC, serif" }}
             >
-              {n.t}
+              {n.en}
+            </text>
+            <text
+              x={n.cx}
+              y={n.cy + 14}
+              textAnchor="middle"
+              fill="#3D2817"
+              fontSize="6.5"
+              fontWeight="600"
+              style={{ fontFamily: "Noto Serif SC, serif" }}
+            >
+              {n.zh}
             </text>
           </g>
         ))}
@@ -63,7 +74,7 @@ export function CompassHubDiagram() {
         </text>
       </svg>
       <figcaption className="sr-only">
-        中央为 Compass 总指挥，六条线分别连接 Prism、Scope、Scalpel、Arena、Balance、Lumen 六位军师。
+        中央为 Compass 总指挥，六条线分别连接 Prism 自我画像官、Scope 行业匹配官、Scalpel 简历医生、Arena 模拟面试官、Balance Offer决策官、Lumen 情绪陪跑官。
       </figcaption>
     </figure>
   );

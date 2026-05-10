@@ -4,7 +4,7 @@ const rows = [
   { dim: "面试准备度", traditional: "背稿子", warRoom: "STAR 肌肉记忆 + 压力面演练" },
   { dim: "情绪支持", traditional: "自己扛", warRoom: "24/7 异步陪跑" },
   { dim: "总耗时", traditional: "30-60 天", warRoom: "30 分钟出地图 + 持续陪跑" },
-  { dim: "成本", traditional: "焦虑 + 5000-30000 元顾问", warRoom: "0 元 + 一次 EasyClaw Skill 安装" },
+  { dim: "成本", traditional: "心理压力 + 学习成本", warRoom: "一次 EasyClaw Skill 安装" },
 ];
 
 export function CompareSection() {
@@ -12,8 +12,10 @@ export function CompareSection() {
     <section id="compare" className="px-4 py-16 sm:py-20">
       <div className="mx-auto max-w-5xl">
         <header className="text-center">
-          <p className="text-sm font-bold tracking-wide text-cta">有了作战部，你的求职会变成什么样</p>
-          <h2 className="mt-2 text-2xl font-bold text-ink sm:text-3xl">传统求职 VS 作战部求职</h2>
+          <h2 className="text-2xl font-bold text-ink sm:text-3xl">传统求职 VS 作战部求职</h2>
+          <p className="mx-auto mt-3 max-w-3xl text-base font-semibold text-ink/80 sm:text-lg">
+            有了作战部，你的求职会变成什么样
+          </p>
         </header>
 
         <div className="mt-10 hidden overflow-x-auto rounded-xl border border-ink/15 bg-paper shadow-card sm:block">

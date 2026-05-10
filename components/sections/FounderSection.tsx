@@ -98,9 +98,7 @@ export function FounderSection() {
           <blockquote className="paper-texture marker-border relative px-6 py-8 sm:px-8 sm:py-10">
             <div className="relative pl-1 font-serif text-xl font-semibold leading-relaxed text-ink before:absolute before:-left-1 before:-top-1 before:font-serif before:text-6xl before:leading-none before:text-ink/20 before:content-['\201C'] sm:text-2xl sm:leading-relaxed sm:before:text-7xl">
               <p className="whitespace-pre-line">
-                {`"你不是被'选对一个 offer'驱动,
-而是被'终其一生找寻自己真正该走的那条路'驱动。
-你纠结的从来不是选项本身,是怕自己又一次走错方向。"`}
+                {`你纠结的从来不是选项本身,是怕自己又一次走错方向。`}
               </p>
             </div>
             <footer className="relative mt-6 border-t border-ink/10 pt-4 text-sm font-semibold text-ink/65 sm:text-base">
@@ -109,31 +107,13 @@ export function FounderSection() {
           </blockquote>
 
           <div className="space-y-5 text-base leading-relaxed text-ink/90 sm:text-[17px] sm:leading-[1.75]">
-            <p>我做这个产品的契机,不是某个商业洞察,而是一次意外。</p>
+            <p>纳瓦尔说，好的产品，都从解决自己的痛苦开始。我做这个产品，就是这样。</p>
             <p className="whitespace-pre-line">
-              {`春招最焦灼的某个凌晨,我刚把 6 个 Agent 在 EasyClaw 上搭好,
-按计划应该用一份"虚拟应届生小李"的人物设定测试整条 Pipeline。
-但我没注意,Prism 第一轮提问时,我下意识用了自己的真实状态回答——
-手里几个 offer 在纠结、羡慕朋友边读研边用 AI 创业、
-大三才意识到校园经济做不过互联网经济、
-作为数学专业的学生却选修了商学院大半课程、
-帮过很多学弟学妹做就业规划但自己反而不敢决定。
-5 轮对话之后,Prism 输出了一份画像。我读到上面那句话时愣住了——
-我身边那么多朋友、那么多次付费咨询,没有一个人在这么短时间里
-说出过这句话。但我自己心里知道:它说对了。`}
+              {`春招最熬人的那个凌晨，我翻着聊天记录，想起这几个月陆陆续续帮过的十多个学弟学妹 —— 他们和我一样，都卡在 offer 选择里，一边被父母的期待推着，一边对着自己的心意反复纠结。转头我就用自己的真实状态，测试刚搭好的 AI Agent。
+Prism 5 轮对话后戳破了我的伪装：你纠结的从来不是选项本身,是怕自己又一次走错方向。`}
             </p>
-            <p className="whitespace-pre-line">
-              {`我从高中盲从、到大学深度参与组织、到做校园创业、到迫于现实选就业,
-表面在"做选择",底层一直在做同一件事——找到自己真正该走的路。
-那一刻我才意识到,作战部的真正价值,不是"帮你挑一个 offer",
-而是它能在你被父母期待、春招 deadline、同辈压力一起裹挟的时候,
-用 5 轮对话告诉你:你纠结的不是这几个 offer,是更深的那个问题。
-应届生最缺的从来不是信息——我整理的就业方法论已经讲过几十遍了,
-听完依然有人请不下来假去实习、有人忙毕业论文错过春招、
-有人明明有能力却被自己的情绪困住。
-最难的从来不是执行,是选择、是情绪、是那些"不知道自己不知道"的盲点。
-7 个 AI 军师做不到代替你做选择,但它们能让选择不再孤独。`}
-            </p>
+            <p>我突然明白：我们缺的从来不是就业信息，是被看见的焦虑、被点破的迷茫，和不用独自硬扛的底气。</p>
+            <p>7 个 AI 军师不会替你做决定，但会让你的选择，不再孤独。</p>
           </div>
         </div>
 

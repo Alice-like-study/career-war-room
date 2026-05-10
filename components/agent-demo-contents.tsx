@@ -9,18 +9,16 @@ function DialogueLine({ who, children }: { who: string; children: ReactNode }) {
 }
 
 function SectionTitle({ children }: { children: ReactNode }) {
-  return <p className="text-sm font-bold text-ink">{children}</p>;
+  return <p className="text-base font-bold text-[#8b2c2c]">{children}</p>;
 }
 
 function QuoteStack({ children }: { children: ReactNode }) {
-  return (
-    <div className="space-y-2 border-l-2 border-ink/15 pl-3 text-[12px] sm:text-[13px]">{children}</div>
-  );
+  return <div className="space-y-2 border-l-2 border-ink/15 pl-3">{children}</div>;
 }
 
 function CodeReport({ children }: { children: ReactNode }) {
   return (
-    <pre className="mt-1 overflow-x-auto whitespace-pre-wrap rounded border border-ink/12 bg-white/75 p-2.5 font-mono text-[11px] leading-snug text-ink/88 sm:text-xs">
+    <pre className="mt-1 overflow-x-auto whitespace-pre-wrap rounded border border-ink/12 bg-white/75 p-3 font-mono text-[13px] leading-relaxed text-ink/88">
       {children}
     </pre>
   );
@@ -65,7 +63,7 @@ export const AGENT_DEMOS = {
 影响力确认 — 因为自己的工作直接改变他人结果
 智力挑战性 — 因为重复性执行会快速消耗热情`}</CodeReport>
       </div>
-      <p className="text-[12px] italic text-ink/70 sm:text-[13px]">
+      <p className="italic text-ink/70">
         5-7 轮追问后，你会得到一份带「证据链」的个人画像——不是星座标签，是你真实行为的镜像。
       </p>
     </>
@@ -103,40 +101,38 @@ export const AGENT_DEMOS = {
 
   scalpel: (
     <>
-      <SectionTitle>【开场诊断（30 秒锁定问题）】</SectionTitle>
-      <p>
-        小李发来简历，第一行是：「性格开朗，吃苦耐劳，具有较强的学习能力。」
-      </p>
-      <p>
-        我直接打断：「停。HR 看到这句话，平均停留 0.3 秒，然后划走。你投的是产品岗，但全文没有『用户洞察』『DAU』『PRD』任何一个关键词。这不是简历，这是自杀式袭击。」
-      </p>
-      <div>
-        <SectionTitle>【典型输出片段：STAR 重写示范】</SectionTitle>
-        <p>原句：「负责校园二手交易平台运营，提升了用户活跃度。」</p>
-        <p className="font-semibold text-ink">【硬伤】「负责……提升了」——无数字、无动作、无差异化。</p>
-        <p className="font-semibold text-ink">→ 重写产品岗版：</p>
-        <QuoteStack>
-          <p>
-            <strong>Situation</strong>｜校园二手交易项目上线 3 个月，DAU 停滞在 200，用户留存率仅 12%。
-          </p>
-          <p>
-            <strong>Task</strong>｜负责提升用户活跃度和交易转化率。
-          </p>
-          <p>
-            <strong>Action</strong>｜① 访谈 47 位用户，定位痛点为「信任机制缺失」；② 设计并上线实名认证 +
-            评分体系，撰写 PRD 推动技术排期；③ 联合 5 个院系学生会做冷启动，策划「开学季 0 元送」活动。
-          </p>
-          <p>
-            <strong>Result</strong>｜DAU 从 200 升至 1,100（+450%），月 GMV 突破 8 万，留存率提升至 34%。
-          </p>
-        </QuoteStack>
-      </div>
+      <SectionTitle>【开场对话】</SectionTitle>
       <QuoteStack>
-        <DialogueLine who="小李的反应：">「原来我做的事可以写成这样……」</DialogueLine>
-        <DialogueLine who="我的回复：">
-          「不是『可以』，是必须。你的经历不差，你只是用 HR 听不懂的语言自废武功。下一句：你投运营岗和金融岗的版本，我一起给你。」
+        <DialogueLine who="小李：">
+          「我投了 80 份简历，只收到 8 个回复。是不是我真的不适合产品岗？」
+        </DialogueLine>
+        <DialogueLine who="Scalpel：">
+          「先别怀疑你自己，先看你的文本。你简历第一行是『性格开朗，吃苦耐劳』，这在 HR
+          眼里等于空白。你不是没经历，是没把经历翻译成招聘方能判分的语言。」
         </DialogueLine>
       </QuoteStack>
+      <div>
+        <SectionTitle>【典型输出片段】</SectionTitle>
+        <CodeReport>{`简历重写报告 - 产品岗版本
+
+## 原句
+负责校园二手交易平台运营，提升了用户活跃度。
+
+## 诊断结论
+- 问题 1：动作词弱（只说“负责”）
+- 问题 2：没有业务数字（无法判断贡献规模）
+- 问题 3：没有方法路径（看不出可复用能力）
+
+## STAR 重写结果
+Situation｜项目上线 3 个月，DAU 停滞在 200，7 日留存仅 12%
+Task｜目标是提升活跃度与交易转化率
+Action｜访谈 47 名用户定位“信任缺失”痛点；上线实名认证+评分体系；联动 5 个院系学生会做冷启动活动
+Result｜DAU 200 → 1100（+450%），月 GMV 达 8 万，7 日留存升至 34%
+
+## 投递建议
+同一经历拆成“产品岗版 / 运营岗版 / 金融岗版”三套表达，避免一份简历打天下。`}</CodeReport>
+      </div>
+      <p className="italic text-ink/70">你不是没有内容，而是需要把内容改写成可量化、可判分、可比较的证据句。</p>
     </>
   ),
 
@@ -152,37 +148,27 @@ export const AGENT_DEMOS = {
         </DialogueLine>
       </QuoteStack>
       <div>
-        <SectionTitle>【场景演示：第 1 题——自我介绍】</SectionTitle>
-        <p>
-          <strong>用户原答：</strong>
-          「我叫小李，来自 XX 大学，学计算机的，对产品挺感兴趣的，做过一个校园二手交易小程序，希望能来贵公司学习。」
-        </p>
-        <p className="font-mono text-[11px] font-bold text-ink/80 sm:text-xs">=== 第 1 轮反馈 ===</p>
-        <p className="font-semibold text-emerald-800">【优点 ✅】 提到了具体项目（校园二手交易小程序），比空泛说「热爱产品」有说服力</p>
-        <div>
-          <p className="font-semibold text-cta">【硬伤 ❌】</p>
-          <ul className="list-disc space-y-1 pl-5 text-[12px] sm:text-[13px]">
-            <li>
-              <strong>求职动机模糊</strong>：「希望能来贵公司学习」这句话有问题，因为公司招的是能创造价值的人，不是来「上课」的
-            </li>
-            <li>
-              <strong>项目缺数据</strong>：「做过一个」没有交代角色、成果，面试官无法判断你是画了两张图还是主导了全流程
-            </li>
-          </ul>
-        </div>
-        <p className="font-semibold text-ink">【改写示范 🎯】</p>
-        <QuoteStack>
-          <p>
-            「我叫小李，XX 大学计算机专业。上一份实习里，我主导了一个校园二手交易平台的产品设计，从用户调研到上线全流程参与。上线 3
-            周积累了 1200 名用户，日均成交 40 单。过程中我发现 PM 的核心是
-            <strong>在约束条件下做取舍</strong>
-            ——比如我们没有开发资源做支付系统，就用企业微信收款码过渡，保证了 MVP 准时上线。这也是我来面试这个岗位的原因：我希望能在一个产品方法论更成熟的团队里，把这件事做得更专业。」
-          </p>
-        </QuoteStack>
-        <p className="text-[12px] font-semibold text-ink/80 sm:text-[13px]">
-          【核心提分点】 用「约束条件下做取舍」替换「来贵公司学习」，体现产品经理的核心能力判断。
-        </p>
+        <SectionTitle>【典型输出片段】</SectionTitle>
+        <CodeReport>{`模拟面试回放 - 第 1 题（自我介绍）
+
+## 用户原答
+我叫小李，来自 XX 大学，学计算机的，对产品挺感兴趣的，做过一个校园二手交易小程序，希望能来贵公司学习。
+
+## Arena 逐句反馈
+【优点】
+- 提到了具体项目，比“我很热爱产品”更有锚点
+
+【硬伤】
+- 求职动机偏弱：公司招的是“能创造价值的人”，不是“来学习的人”
+- 结果证据缺失：没有角色、规模、结果，无法判定贡献
+
+## 改写示范
+我叫小李，XX 大学计算机专业。上一段经历里我主导校园二手交易平台从调研到上线的完整流程，上线 3 周积累 1200 名用户，日均成交 40 单。这个过程让我形成了“在约束条件下做取舍”的产品判断，比如在开发资源不足时先用企业微信收款码完成 MVP，保障节点交付。这也是我应聘该岗位的核心动机。
+
+## 复盘结论
+一句“来贵公司学习”换成“我能带来什么价值”，就是候选人与学生心态的分水岭。`}</CodeReport>
       </div>
+      <p className="italic text-ink/70">Arena 的目标不是让你背稿，而是把回答改造成可迁移的结构化模板。</p>
     </>
   ),
 
@@ -199,111 +185,77 @@ export const AGENT_DEMOS = {
           <strong className="text-ink">这 7 个维度在你心里各占多少比重？</strong> 总和必须是 100%。」
         </DialogueLine>
       </QuoteStack>
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[280px] border-collapse text-[11px] sm:text-[12px]">
-          <thead>
-            <tr className="border-b border-ink/15">
-              <th className="py-1.5 pr-2 text-left font-bold text-ink">维度</th>
-              <th className="py-1.5 px-1 text-left font-bold text-ink">解释</th>
-              <th className="py-1.5 pl-2 text-right font-bold text-ink">你的权重</th>
-            </tr>
-          </thead>
-          <tbody className="text-ink/85">
-            {[
-              ["钱", "起薪 + 3 年薪资增速", "__%"],
-              ["成长", "业务复杂度、能学到的东西", "__%"],
-              ["稳定", "公司不会暴雷的概率", "__%"],
-              ["城市", "城市本身的吸引力", "__%"],
-              ["平台", "公司品牌、未来跳槽抬头", "__%"],
-              ["直属上级", "上级是不是值得跟的人", "__%"],
-              ["行业前景", "5 年后这个行业还在不在", "__%"],
-            ].map(([a, b, c]) => (
-              <tr key={a} className="border-b border-ink/8">
-                <td className="py-1 pr-2 font-semibold text-ink/90">{a}</td>
-                <td className="py-1 px-1">{b}</td>
-                <td className="py-1 pl-2 text-right">{c}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div>
+        <SectionTitle>【典型输出片段】</SectionTitle>
+        <CodeReport>{`Offer 决策报告 - Balance
+
+## 维度权重表（用户填写）
+| 维度 | 解释 | 权重 |
+| --- | --- | --- |
+| 钱 | 起薪 + 3 年薪资增速 | 20% |
+| 成长 | 业务复杂度、学习速度 | 25% |
+| 稳定 | 公司抗风险能力 | 15% |
+| 城市 | 生活偏好与机会密度 | 10% |
+| 平台 | 品牌与跳槽抬头 | 10% |
+| 直属上级 | 带教质量与风格匹配 | 10% |
+| 行业前景 | 赛道 5 年确定性 | 10% |
+
+## 加权评分表（示例）
+| 维度 | 权重 | 字节运营 | 加权 | AI 创业产品 | 加权 |
+| --- | --- | --- | --- | --- | --- |
+| 钱 | 20% | 6 | 1.2 | 8 | 1.6 |
+| 成长 | 25% | 7 | 1.8 | 9 | 2.3 |
+| 稳定 | 15% | 9 | 1.4 | 4 | 0.6 |
+| ... | ... | ... | ... | ... | ... |
+| 总分 | 100% | - | 7.5 | - | 7.3 |
+
+## 结论
+理性最优解：字节运营，领先 0.2 分。
+
+## 反直觉提醒
+如果“成长”真是你第一权重，AI 方案不应只落后 0.2。你可能在用“稳定”做最终裁决。建议冷静 24 小时后重填一次权重表。`}</CodeReport>
       </div>
-      <p className="text-[12px] font-semibold text-ink/75 sm:text-[13px]">（用户填完后，基于权重的评分表示例）</p>
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[320px] border-collapse text-[10px] sm:text-[11px]">
-          <thead>
-            <tr className="border-b border-ink/15">
-              <th className="py-1 pr-1 text-left font-bold">维度</th>
-              <th className="py-1 px-0.5 text-left font-bold">权重</th>
-              <th className="py-1 px-0.5 text-left font-bold">字节运营</th>
-              <th className="py-1 px-0.5 text-left font-bold">加权</th>
-              <th className="py-1 px-0.5 text-left font-bold">AI 创业公司产品</th>
-              <th className="py-1 pl-0.5 text-left font-bold">加权</th>
-            </tr>
-          </thead>
-          <tbody>
-            {[
-              ["钱", "20%", "6", "1.2", "8", "1.6"],
-              ["成长", "25%", "7", "1.8", "9", "2.3"],
-              ["稳定", "15%", "9", "1.4", "4", "0.6"],
-              ["...", "...", "...", "...", "...", "..."],
-              ["总分", "100%", "", "7.5", "", "7.3"],
-            ].map((row, ri) => (
-              <tr key={`score-${ri}`} className="border-b border-ink/8">
-                {row.map((cell, ci) => (
-                  <td key={`score-${ri}-${ci}`} className="py-1 text-ink/85">
-                    {cell === "7.5" || cell === "7.3" ? <strong className="text-ink">{cell}</strong> : cell}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <p>
-        <strong>理性最优解：字节运营，领先 0.2 分。</strong>
-      </p>
-      <p>
-        <strong className="text-cta">反直觉提醒 ⚠️</strong>{" "}
-        你刚才说「父母觉得大厂稳定」——这句话里藏着信号。如果你的成长权重真的是 25%，那 AI
-        创业公司应该大幅领先才对。但你只给了它 0.2 分的微弱劣势，说明你内心
-        <strong>其实在用「稳定」做最终裁决</strong>
-        。先冷静 24 小时，重新填一遍权重表。
-        <strong>这次诚实一点，不要填「你想成为的人」，填「你现在的真实排序」。</strong>
-      </p>
+      <p className="italic text-ink/70">Balance 不替你决定，只把你“嘴上排序”和“真实排序”摆到同一张表里。</p>
     </>
   ),
 
   lumen: (
     <>
-      <SectionTitle>【场景】</SectionTitle>
-      <p>
-        凌晨 00:23，用户投完第 12 份简历后，在系统里发了句「又投了一遍，真的累了，不想再改了，反正也不会有人要我」。
-      </p>
+      <SectionTitle>【开场对话】</SectionTitle>
+      <QuoteStack>
+        <DialogueLine who="用户（00:23）：">
+          「又投了一份，还是没消息。真的累了，不想改了，反正也不会有人要我。」
+        </DialogueLine>
+        <DialogueLine who="Lumen：">
+          「我先帮你把状态拆开，不讲鸡汤。你现在不是‘懒’，是连续投递后的情绪反噬。我们先把大脑从自证陷阱里拉出来，再谈下一步。」
+        </DialogueLine>
+      </QuoteStack>
       <div>
-        <SectionTitle>【识别到的信号】</SectionTitle>
-        <p>
-          你刚投完简历，说「不想再改了」，还加了一句「反正也不会有人要我」。这通常意味着你刚刚经历了一次完整的投简历流程，现在进入了贤者时间，同时那份被拒绝的恐惧又冒出来了。
-        </p>
+        <SectionTitle>【典型输出片段】</SectionTitle>
+        <CodeReport>{`Lumen 异步陪跑记录（CBT）
+
+## 信号识别
+- 行为信号：连续投递后突然停摆
+- 认知信号：出现“反正没人要我”的绝对化判断
+- 身体信号：疲惫、回避、注意力涣散
+
+## 情绪命名
+当前状态：自证陷阱（担心被拒绝 -> 先否定自己 -> 暂停行动）
+
+## 认知拆解
+事实：你已经完成 12 次投递，这是有效行动。
+自动化想法：投了就必须马上有反馈，否则说明我不行。
+替代想法：投递是概率事件，今天的动作不等于今天的结果。
+
+## 最小行动（10 分钟）
+1) 手机倒扣，离开屏幕 3 分钟
+2) 喝一杯水，做 6 次深呼吸
+3) 只改简历里一个动词，不做全量重写
+
+## 回流提示
+完成后回复“done”，我再接你下一步。`}</CodeReport>
       </div>
-      <div>
-        <SectionTitle>【命名】</SectionTitle>
-        <p>
-          你现在的状态是<strong>自证陷阱</strong>
-          ——你内心其实还想再试一次，但被「如果再被拒绝会更难受」的预期吓住了，所以先自己先否定自己。
-        </p>
-      </div>
-      <div>
-        <SectionTitle>【拆解】</SectionTitle>
-        <p>事实是：你刚刚投出了 12 份简历，这个行为本身已经很实在。</p>
-        <p>
-          你的解读可能加上了：投=必须拿到 offer，不投=废物。中间跳了一级——你默认了「投了=一定要有结果」。
-        </p>
-      </div>
-      <div>
-        <SectionTitle>【最小行动】</SectionTitle>
-        <p>接下来 10 分钟，只做这一件事：把手机扣在桌上，去倒一杯水喝完。不用想后面投不投的事。</p>
-      </div>
-      <p className="font-semibold text-ink/90">我在这里。</p>
+      <p className="italic text-ink/70">Lumen 的目标是先稳住人，再稳住行动节奏。</p>
     </>
   ),
 } as const satisfies Record<string, ReactNode>;
