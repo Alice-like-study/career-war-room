@@ -105,19 +105,19 @@ career-war-room/
 访问 [easyclaw.com](https://easyclaw.com),下载对应系统的客户端,完成账号注册。
 
 ### 第二步:导入 Agent 配置文件
-本仓库 `agents-config/` 目录下有 6 个子目录,每个对应一个 Agent:
-- `prism/`(自我画像官)
-- `scope/`(行业匹配官)
-- `scalpel/`(简历医生)
-- `arena/`(模拟面试官)
-- `balance/`(Offer 决策官)
-- `lumen/`(情绪陪跑官)
+本仓库 `agents-config/AGENTS.md` 文件汇总了 6 位 Agent 的完整配置:
+- Prism(自我画像官)
+- Scope(行业匹配官)
+- Scalpel(简历医生)
+- Arena(模拟面试官)
+- Balance(Offer 决策官)
+- Lumen(情绪陪跑官)
 
-每个目录下有 `IDENTITY.md`(身份定义)和 `SOUL.md`(人设与方法论)。
-将这 6 个目录复制到 EasyClaw 工作区:
-\`\`\`
-~/.easyclaw/agents/
-\`\`\`
+每位 Agent 都包含 IDENTITY(身份定义)和 SOUL(人设与方法论)两部分。
+直接对你的主 Agent 说:
+> "请按 agents-config/AGENTS.md 的内容,创建 6 位子 Agent。"
+
+主 Agent 会自动完成创建。
 
 ### 第三步:配置主 Agent 调度权限
 在 EasyClaw 客户端,对你的主 Agent(Compass)说:
