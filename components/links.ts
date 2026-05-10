@@ -23,5 +23,5 @@ export const links = {
   /** 打开你已部署的 EasyClaw（原「下载客户端」在 Web 场景下即打开站点） */
   easyclawDownload: easyclawApp ?? "#",
   /** 本作品源码仓库（建好仓库后配置） */
-  github: githubRepo ?? "#",
+  github: githubRepo ?? "https://github.com/Alice-like-study/career-war-room.git",
 } as const;
