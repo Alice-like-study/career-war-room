@@ -312,6 +312,36 @@ function shortApiFailureMessage(status: number, bodyText: string): string {
 
 
 
+/** 优先解析 /api/chat 返回的 JSON `{ error }`，否则再走 HTML/纯文本兜底 */
+
+async function explainApiFailure(res: Response): Promise<string> {
+
+  const text = await res.text().catch(() => "");
+
+  const ct = res.headers.get("content-type") ?? "";
+
+  if (ct.includes("application/json")) {
+
+    try {
+
+      const j = JSON.parse(text) as { error?: unknown };
+
+      if (typeof j.error === "string" && j.error.trim()) return j.error.trim();
+
+    } catch {
+
+      /* 使用下方兜底 */
+
+    }
+
+  }
+
+  return shortApiFailureMessage(res.status, text) || `请求失败（${res.status}）`;
+
+}
+
+
+
 /** 军师完成一段话后的小字交接提示（学习用占位：按流程下一棒） */
 
 function handoffSubtitle(key: AgentKey): string {
@@ -622,13 +652,7 @@ export default function ChatPage() {
 
       if (!res.ok) {
 
-        const errText = await res.text().catch(() => "");
-
-        throw new Error(
-
-          shortApiFailureMessage(res.status, errText) || `生成失败 (${res.status})`,
-
-        );
+        throw new Error(await explainApiFailure(res));
 
       }
 
@@ -852,13 +876,7 @@ export default function ChatPage() {
 
       if (!res.ok) {
 
-        const errText = await res.text().catch(() => "");
-
-        throw new Error(
-
-          shortApiFailureMessage(res.status, errText) || `请求失败 (${res.status})`,
-
-        );
+        throw new Error(await explainApiFailure(res));
 
       }
 
