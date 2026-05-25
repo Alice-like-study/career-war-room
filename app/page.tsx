@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AgentsSection } from "@/components/sections/AgentsSection";
 import { AudienceSection } from "@/components/sections/AudienceSection";
 import { ClosingSection } from "@/components/sections/ClosingSection";
@@ -80,6 +81,14 @@ export default function HomePage() {
       <CompareSection />
       <AudienceSection />
       <FounderSection />
+      <p className="border-t border-ink/10 bg-cream px-4 py-8 text-center">
+        <Link
+          href="#cta"
+          className="text-sm font-medium text-ink/45 underline decoration-ink/20 underline-offset-4 transition hover:text-ink/70 hover:decoration-ink/35"
+        >
+          或：作为 EasyClaw Skill 安装 →
+        </Link>
+      </p>
       <ClosingSection />
     </main>
   );

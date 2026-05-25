@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const heroMetrics = [
   { value: "7", label: "专属 Agent" },
@@ -7,7 +10,52 @@ const heroMetrics = [
   { value: "4 类", label: "应届生画像覆盖" },
 ];
 
+const ROTATING_LINES = [
+  "我不知道自己适合什么…",
+  "简历投了80份没回音…",
+  "面试一紧张就大脑空白…",
+] as const;
+
+const FIXED_SUFFIX = "→ 让 7 位 AI 军师帮你";
+const TYPE_MS = 72;
+const HOLD_MS = 2000;
+const DELETE_MS = 36;
+
 export function HeroSection() {
+  const [lineIndex, setLineIndex] = useState(0);
+  const [displayed, setDisplayed] = useState("");
+  const [phase, setPhase] = useState<"typing" | "holding" | "deleting">("typing");
+
+  useEffect(() => {
+    const full = ROTATING_LINES[lineIndex];
+    let t: ReturnType<typeof setTimeout>;
+
+    if (phase === "typing") {
+      if (displayed.length < full.length) {
+        t = setTimeout(() => {
+          setDisplayed(full.slice(0, displayed.length + 1));
+        }, TYPE_MS);
+      } else {
+        t = setTimeout(() => setPhase("holding"), 0);
+      }
+    } else if (phase === "holding") {
+      t = setTimeout(() => setPhase("deleting"), HOLD_MS);
+    } else {
+      if (displayed.length > 0) {
+        t = setTimeout(() => {
+          setDisplayed((d) => d.slice(0, -1));
+        }, DELETE_MS);
+      } else {
+        t = setTimeout(() => {
+          setLineIndex((i) => (i + 1) % ROTATING_LINES.length);
+          setPhase("typing");
+        }, 0);
+      }
+    }
+
+    return () => clearTimeout(t);
+  }, [displayed, lineIndex, phase]);
+
   return (
     <section className="relative overflow-hidden px-4 pb-16 pt-14 sm:pb-20 sm:pt-20">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(196,30,58,0.06),transparent_55%)]" />
@@ -18,8 +66,12 @@ export function HeroSection() {
         <h1 className="text-balance text-3xl font-bold leading-tight text-ink sm:text-5xl sm:leading-tight">
           应届生求职作战部
         </h1>
-        <p className="mx-auto mt-6 max-w-3xl text-balance text-lg font-semibold text-ink/90 sm:text-xl">
-          7 位 AI 军师，30 分钟生成你的《校招作战地图》
+        <p className="mx-auto mt-6 flex min-h-[3.25rem] max-w-3xl flex-wrap items-baseline justify-center gap-x-1 text-balance text-lg font-semibold text-ink/90 sm:min-h-[3.5rem] sm:text-xl">
+          <span className="text-[#8B2C2C]">
+            {displayed}
+            <span className="animate-warroom-caret inline-block w-[2px] translate-y-[0.12em] border-l-2 border-[#8B2C2C] sm:border-l-[3px]" />
+          </span>
+          <span className="text-ink/88">{FIXED_SUFFIX}</span>
         </p>
         <div className="mx-auto mt-9 grid w-full max-w-5xl grid-cols-2 gap-x-3 gap-y-4 sm:grid-cols-4 sm:gap-x-6 sm:gap-y-0">
           {heroMetrics.map((metric) => (
@@ -34,12 +86,12 @@ export function HeroSection() {
             </div>
           ))}
         </div>
-        <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+        <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:flex-wrap sm:gap-6">
           <Link
-            href="#cta"
-            className="inline-flex min-h-[48px] min-w-[240px] items-center justify-center rounded-full bg-cta px-8 py-3 text-base font-bold text-white shadow-[3px_4px_0_rgba(61,40,23,0.15)] transition hover:brightness-105 active:translate-y-px"
+            href="/chat"
+            className="hero-cta-primary-glow inline-flex min-h-[48px] min-w-[240px] items-center justify-center rounded-full bg-cta px-8 py-3 text-base font-bold text-white"
           >
-            去 EasyClaw 安装作战部 Skill 包
+            🚀 立即体验作战部
           </Link>
           <a
             href="#founder-story"

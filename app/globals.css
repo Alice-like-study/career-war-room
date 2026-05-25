@@ -43,3 +43,193 @@ body {
     text-wrap: balance;
   }
 }
+
+/* ── Career War Room / 作战室 ── */
+
+@keyframes warroom-live-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(196, 30, 58, 0.45);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.92);
+    box-shadow: 0 0 0 10px rgba(196, 30, 58, 0);
+  }
+}
+
+@keyframes warroom-pulse-ring {
+  0% {
+    opacity: 0.55;
+    transform: scale(0.94);
+  }
+  70% {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes warroom-msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes warroom-caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+.animate-warroom-live-dot {
+  animation: warroom-live-dot 2.2s ease-in-out infinite;
+}
+
+.animate-warroom-pulse-ring {
+  animation: warroom-pulse-ring 2.2s ease-out infinite;
+}
+
+.animate-warroom-msg-in {
+  animation: warroom-msg-in 0.45s ease-out forwards;
+}
+
+.animate-warroom-caret {
+  animation: warroom-caret 1s step-end infinite;
+}
+
+/* 「校招作战地图」生成按钮 · 呼吸光晕 */
+@keyframes battle-map-breathe {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(196, 30, 58, 0), 0 0 22px rgba(212, 165, 116, 0.35),
+      inset 0 0 12px rgba(255, 255, 255, 0.4);
+    filter: brightness(1);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(196, 30, 58, 0.45), 0 0 40px rgba(212, 165, 116, 0.62),
+      inset 0 0 14px rgba(255, 255, 255, 0.55);
+    filter: brightness(1.04);
+  }
+}
+
+.animate-battle-map-breathe {
+  animation: battle-map-breathe 2.8s ease-in-out infinite;
+}
+
+/* Hero 主 CTA：呼吸光晕 + 悬停强化（与 animate 可同时存在） */
+@keyframes hero-cta-breathe-glow {
+  0%,
+  100% {
+    box-shadow: 3px 4px 0 rgba(61, 40, 23, 0.15), 0 0 0 0 rgba(196, 30, 58, 0.5),
+      0 0 22px rgba(196, 30, 58, 0.28);
+  }
+  45% {
+    box-shadow: 3px 4px 0 rgba(61, 40, 23, 0.12), 0 0 0 14px rgba(196, 30, 58, 0),
+      0 0 42px rgba(196, 30, 58, 0.55);
+  }
+}
+
+.hero-cta-primary-glow {
+  animation: hero-cta-breathe-glow 2.6s ease-in-out infinite;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    filter 0.22s ease;
+}
+
+.hero-cta-primary-glow:hover {
+  animation: none;
+  transform: scale(1.05);
+  box-shadow:
+    3px 6px 14px rgba(61, 40, 23, 0.28),
+    0 0 0 0 rgba(196, 30, 58, 0.35),
+    0 16px 40px rgba(196, 30, 58, 0.35);
+  filter: brightness(1.05);
+}
+
+.hero-cta-primary-glow:active {
+  transform: scale(1.02) translateY(1px);
+}
+
+/* 抽屉内 Markdown · 公文感排版（避免在 @apply 里写自定义色透明度，会与 PostCSS 冲突） */
+
+.battle-map-md {
+  @apply text-[15px] leading-relaxed text-ink;
+}
+
+.battle-map-md h1 {
+  @apply mb-6 mt-2 border-b-2 pb-3 text-2xl font-bold tracking-tight text-ink;
+
+  border-bottom-color: rgba(61, 40, 23, 0.18);
+}
+
+.battle-map-md h2 {
+  @apply mb-3 mt-8 flex items-center gap-2 border-l-4 pl-3 text-[17px] font-bold text-ink;
+
+  border-left-color: rgba(196, 30, 58, 0.7);
+}
+
+.battle-map-md p {
+  @apply my-3 text-[15px];
+
+  color: rgba(61, 40, 23, 0.92);
+
+}
+
+.battle-map-md ol {
+  @apply my-4 list-decimal space-y-2 pl-6 marker:font-semibold;
+
+}
+
+.battle-map-md ul {
+  @apply my-4 list-disc space-y-2 pl-6;
+
+}
+
+.battle-map-md ol li::marker {
+
+  color: rgba(61, 40, 23, 0.7);
+
+}
+
+.battle-map-md ul li::marker {
+
+  color: rgba(61, 40, 23, 0.65);
+
+}
+
+.battle-map-md li {
+  @apply pl-1 text-[15px];
+
+  color: rgba(61, 40, 23, 0.92);
+
+}
+
+.battle-map-md strong {
+  @apply font-bold text-ink;
+}
+
+.battle-map-md hr {
+  @apply my-8 border-0 border-t-2 border-solid;
+
+  border-top-color: rgba(61, 40, 23, 0.15);
+
+}
+
+.battle-map-md em {
+  @apply text-[14px] not-italic;
+
+  color: rgba(61, 40, 23, 0.55);
+
+}
