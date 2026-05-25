@@ -284,6 +284,34 @@ function buildWarRoomSystem(agent: AgentKey) {
 
 
 
+/** `/api/chat` 非 2xx 且返回整页 HTML（如 404）时，避免把源码全文塞进错误栏 */
+
+function shortApiFailureMessage(status: number, bodyText: string): string {
+
+  const t = bodyText.trim();
+
+  if (
+
+    !t ||
+
+    /<![Dd][Oo][Cc][Tt][Yy][Pp][Ee]\s+[Hh][Tt][Mm][Ll]/.test(t) ||
+
+    /^<\s*html\b/i.test(t)
+
+  ) {
+
+    return `服务端接口不可用（HTTP ${status}）。Vercel 部署请使用默认 Next 构建（勿设 output: 'export'），并配置 KIMI_API_KEY。`;
+
+  }
+
+  const flat = t.replace(/\s+/g, " ");
+
+  return flat.length <= 280 ? flat : `${flat.slice(0, 280)}…`;
+
+}
+
+
+
 /** 军师完成一段话后的小字交接提示（学习用占位：按流程下一棒） */
 
 function handoffSubtitle(key: AgentKey): string {
@@ -596,7 +624,11 @@ export default function ChatPage() {
 
         const errText = await res.text().catch(() => "");
 
-        throw new Error(errText || `生成失败 (${res.status})`);
+        throw new Error(
+
+          shortApiFailureMessage(res.status, errText) || `生成失败 (${res.status})`,
+
+        );
 
       }
 
@@ -822,7 +854,11 @@ export default function ChatPage() {
 
         const errText = await res.text().catch(() => "");
 
-        throw new Error(errText || `请求失败 (${res.status})`);
+        throw new Error(
+
+          shortApiFailureMessage(res.status, errText) || `请求失败 (${res.status})`,
+
+        );
 
       }
 
