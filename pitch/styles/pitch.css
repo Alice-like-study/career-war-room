@@ -1,0 +1,565 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+.pitch-deck-root {
+  --font-mono: "JetBrains Mono", Consolas, monospace;
+  background-color: #f8f4ed;
+  color: #3d2817;
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--font-serif, "Noto Serif SC", "Songti SC", "SimSun", serif);
+}
+
+html:has(.pitch-deck-root),
+html:has(.pitch-deck-root) body {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+.paper-texture {
+  background-color: #fffbf5;
+  background-image: radial-gradient(rgba(61, 40, 23, 0.045) 1px, transparent 1px);
+  background-size: 10px 10px;
+}
+
+.marker-border {
+  border-radius: 255px 18px 225px 18px / 18px 225px 18px 255px;
+  border: 2.5px solid #3d2817;
+  box-shadow: 3px 4px 0 rgba(61, 40, 23, 0.07);
+}
+
+.marker-border-soft {
+  border-radius: 235px 22px 215px 22px / 22px 215px 22px 235px;
+  border: 2px solid rgba(61, 40, 23, 0.85);
+}
+
+.font-mono-term {
+  font-family: var(--font-mono);
+}
+
+@keyframes pitch-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pitch-hint-fade {
+  0%,
+  70% {
+    opacity: 0.45;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes dashboard-breathe {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(196, 30, 58, 0.4);
+  }
+  50% {
+    opacity: 0.55;
+    box-shadow: 0 0 6px 2px rgba(196, 30, 58, 0.25);
+  }
+}
+
+@keyframes dashboard-caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+.animate-pitch-enter {
+  animation: pitch-slide-in 280ms ease-out forwards;
+}
+
+.animate-pitch-hint {
+  animation: pitch-hint-fade 3s ease-out forwards;
+}
+
+.animate-dashboard-dot {
+  animation: dashboard-breathe 2s ease-in-out infinite;
+}
+
+.animate-dashboard-caret {
+  animation: dashboard-caret 0.9s step-end infinite;
+}
+
+@keyframes pitch-chat-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pitch-live-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(196, 30, 58, 0.45);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.92);
+    box-shadow: 0 0 0 8px rgba(196, 30, 58, 0);
+  }
+}
+
+@keyframes pitch-pulse-ring {
+  0% {
+    opacity: 0.55;
+    transform: scale(0.96);
+  }
+  70% {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+}
+
+.animate-pitch-chat-in {
+  animation: pitch-chat-in 0.4s ease-out forwards;
+}
+
+.animate-pitch-live-dot {
+  animation: pitch-live-dot 2.4s ease-in-out infinite;
+}
+
+.animate-pitch-pulse-ring {
+  animation: pitch-pulse-ring 1.8s ease-out infinite;
+}
+
+/* 第 5 页「三大求职场景演示」动效 */
+@keyframes pipeline-title-in {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pipeline-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pipeline-step-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pipeline-agent-breathe {
+  0%,
+  100% {
+    border-color: rgba(123, 30, 34, 0.33);
+  }
+  50% {
+    border-color: rgba(123, 30, 34, 0.37);
+  }
+}
+
+@keyframes pipeline-dot-flow {
+  from {
+    top: 0;
+    opacity: 0.4;
+  }
+  20% {
+    opacity: 0.7;
+  }
+  to {
+    top: calc(100% - 4px);
+    opacity: 0.15;
+  }
+}
+
+.animate-pipeline-title {
+  animation: pipeline-title-in 420ms ease-out forwards;
+}
+
+.animate-pipeline-fade {
+  animation: pipeline-fade-in 300ms ease-out forwards;
+}
+
+.animate-pipeline-step {
+  animation: pipeline-step-in 360ms ease-out forwards;
+}
+
+.animate-pipeline-breathe {
+  animation: pipeline-agent-breathe 4s ease-in-out infinite;
+}
+
+.pipeline-flow-dot {
+  animation: pipeline-dot-flow 1.8s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-pipeline-title,
+  .animate-pipeline-fade,
+  .animate-pipeline-step {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .animate-pipeline-breathe,
+  .pipeline-flow-dot {
+    animation: none !important;
+  }
+}
+
+/* 第 7 页「Prism 创始人故事」入场动效（仅首次进入，4s 内结束） */
+@keyframes founder-quote-in {
+  from {
+    opacity: 0;
+    letter-spacing: 6px;
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    letter-spacing: 0;
+    filter: blur(0);
+  }
+}
+
+@keyframes founder-attribution-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes founder-divider-in {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes founder-story-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.founder-story--live .founder-quote {
+  opacity: 0;
+  letter-spacing: 6px;
+  filter: blur(4px);
+  animation: founder-quote-in 1200ms ease-out forwards;
+}
+
+.founder-story--live .founder-attribution {
+  opacity: 0;
+  animation: founder-attribution-in 400ms ease-out 1400ms forwards;
+}
+
+.founder-story--live .founder-divider {
+  transform: scaleX(0);
+  transform-origin: center;
+  animation: founder-divider-in 400ms ease-out 1500ms forwards;
+}
+
+.founder-story--live .founder-story-para-1 {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: founder-story-in 500ms ease-out 1900ms forwards;
+}
+
+.founder-story--live .founder-story-para-2 {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: founder-story-in 500ms ease-out 2400ms forwards;
+}
+
+.founder-story--live .founder-story-para-3 {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: founder-story-in 500ms ease-out 2900ms forwards;
+}
+
+.founder-story--done .founder-quote,
+.founder-story--done .founder-attribution,
+.founder-story--done .founder-divider,
+.founder-story--done .founder-story-para {
+  opacity: 1;
+  letter-spacing: 0;
+  filter: none;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .founder-story--live .founder-quote,
+  .founder-story--live .founder-attribution,
+  .founder-story--live .founder-divider,
+  .founder-story--live .founder-story-para {
+    animation: none !important;
+    opacity: 1 !important;
+    letter-spacing: 0 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+}
+
+/* 第 8 页「结语」入场动效（节奏同第 7 页，仅首次进入，4s 内结束） */
+.closing-story--live .closing-tagline {
+  opacity: 0;
+  letter-spacing: 6px;
+  filter: blur(4px);
+  animation: founder-quote-in 1200ms ease-out forwards;
+}
+
+.closing-story--live .closing-divider {
+  transform: scaleX(0);
+  transform-origin: center;
+  animation: founder-divider-in 400ms ease-out 1500ms forwards;
+}
+
+.closing-story--live .closing-author {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: founder-story-in 500ms ease-out 1900ms forwards;
+}
+
+.closing-story--live .closing-contact {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: founder-story-in 500ms ease-out 2400ms forwards;
+}
+
+.closing-story--live .closing-links {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: founder-story-in 500ms ease-out 2900ms forwards;
+}
+
+.closing-story--live .closing-footer {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: founder-story-in 500ms ease-out 3400ms forwards;
+}
+
+.closing-story--done .closing-tagline,
+.closing-story--done .closing-divider,
+.closing-story--done .closing-author,
+.closing-story--done .closing-contact,
+.closing-story--done .closing-links,
+.closing-story--done .closing-footer {
+  opacity: 1;
+  letter-spacing: 0;
+  filter: none;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .closing-story--live .closing-tagline,
+  .closing-story--live .closing-divider,
+  .closing-story--live .closing-author,
+  .closing-story--live .closing-contact,
+  .closing-story--live .closing-links,
+  .closing-story--live .closing-footer {
+    animation: none !important;
+    opacity: 1 !important;
+    letter-spacing: 0 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+}
+
+/* 第 3 页「作战指挥中心 · 架构总览」动效 */
+@keyframes arch-compass-in {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes arch-compass-breathe {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes arch-line-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes arch-agent-pop {
+  from {
+    opacity: 0;
+    transform: translate(var(--arch-dx), var(--arch-dy)) scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes arch-agent-breathe {
+  0%,
+  100% {
+    stroke: #3d2817;
+    stroke-opacity: 1;
+  }
+  50% {
+    stroke: #443528;
+    stroke-opacity: 0.92;
+  }
+}
+
+@keyframes arch-mono-dot-blink {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.arch-diagram-svg .arch-compass-hub {
+  animation: arch-compass-in 400ms ease-out forwards;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.arch-diagram-svg .arch-compass-labels {
+  /* 指南针 emoji 与文字保持静止 */
+}
+
+.arch-diagram-svg .arch-compass-ring {
+  opacity: 0.6;
+}
+
+.arch-diagram-svg .arch-compass-ring--live {
+  animation: arch-compass-breathe 3s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.arch-diagram-svg .arch-line-path {
+  stroke: #3d2817;
+  stroke-width: 1;
+  opacity: 0.55;
+  transition:
+    stroke 300ms ease,
+    stroke-width 300ms ease,
+    opacity 300ms ease;
+}
+
+.arch-diagram-svg .arch-line-path--draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: arch-line-draw 500ms ease-out forwards;
+}
+
+.arch-diagram-svg .arch-line-path--hover {
+  stroke: #2a1a0f;
+  stroke-width: 2;
+  opacity: 0.88;
+}
+
+.arch-diagram-svg .arch-agent-motion {
+  opacity: 0;
+  animation: arch-agent-pop 400ms ease-out forwards;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.arch-diagram-svg .arch-agent-body {
+  transition: transform 300ms ease;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.arch-diagram-svg .arch-agent-ring {
+  transition:
+    stroke 300ms ease,
+    stroke-width 300ms ease;
+}
+
+.arch-diagram-svg .arch-agent-node--live .arch-agent-ring {
+  animation: arch-agent-breathe 4s ease-in-out infinite;
+  animation-delay: var(--arch-breathe-delay, 0s);
+}
+
+.arch-diagram-svg .arch-agent-body--hover {
+  transform: scale(1.08);
+}
+
+.arch-diagram-svg .arch-agent-body--hover .arch-agent-ring {
+  stroke: #2a1a0f;
+  stroke-width: 2.8;
+}
+
+.arch-diagram-wrap {
+  cursor: default;
+}
+
+.arch-diagram-svg .arch-agent-hit {
+  cursor: pointer;
+}
+
+.arch-mono-dot--live {
+  animation: arch-mono-dot-blink 1.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arch-diagram-svg .arch-compass-hub,
+  .arch-diagram-svg .arch-agent-motion,
+  .arch-diagram-svg .arch-line-path--draw,
+  .arch-diagram-svg .arch-compass-ring--live,
+  .arch-diagram-svg .arch-agent-node--live .arch-agent-ring,
+  .arch-mono-dot--live {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}

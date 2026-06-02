@@ -57,7 +57,7 @@ export default function HomePage() {
             </article>
 
             <article className="paper-texture rounded-2xl border-2 border-[#8B2C2C] p-6 sm:p-8">
-              <h3 className="text-2xl font-bold text-ink sm:text-3xl">EasyClaw 作战部的解法</h3>
+              <h3 className="text-2xl font-bold text-ink sm:text-3xl">Career War Room 的解法</h3>
               <ul className="mt-6 space-y-4">
                 {solutions.map((solution) => (
                   <li key={solution} className="flex items-start gap-3">

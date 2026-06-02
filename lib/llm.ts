@@ -60,10 +60,13 @@ export async function askLLM(
   const model = getModel(provider);
   const openAIMessages = toOpenAIMessages(params.system, params.messages);
 
+  const maxTokens = MODEL_CONFIG.kimi.maxTokens;
+
   if (params.stream) {
     return client.chat.completions.create({
       model,
       messages: openAIMessages,
+      max_tokens: maxTokens,
       stream: true,
     });
   }
@@ -71,6 +74,7 @@ export async function askLLM(
   const completion = await client.chat.completions.create({
     model,
     messages: openAIMessages,
+    max_tokens: maxTokens,
     stream: false,
   });
 

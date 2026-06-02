@@ -60,6 +60,14 @@ export function HeroSection() {
     <section className="relative overflow-hidden px-4 pb-16 pt-14 sm:pb-20 sm:pt-20">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(196,30,58,0.06),transparent_55%)]" />
       <div className="relative mx-auto max-w-4xl text-center">
+        <Link
+          href="/pitch"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute right-0 top-0 inline-flex h-8 items-center justify-center rounded-full border border-ink/20 bg-white/90 px-3 text-xs font-semibold text-ink/75 transition hover:border-ink/40 hover:text-ink"
+        >
+          演示
+        </Link>
         <p className="mb-3 text-sm font-semibold tracking-widest text-ink/60">
           Career War Room · EasyClaw
         </p>

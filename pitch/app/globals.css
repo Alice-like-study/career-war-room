@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Noto+Serif+SC:wght@400;600;700&display=swap");
+@import "../styles/pitch.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-serif: "Noto Serif SC", "Songti SC", "SimSun", serif;
+  --font-mono: "JetBrains Mono", Consolas, monospace;
+  --cream: #f8f4ed;
+  --ink: #3d2817;
+  --cta: #c41e3a;
+}
+
+html,
+body {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  @apply bg-cream text-ink antialiased;
+  font-family: var(--font-serif);
+}

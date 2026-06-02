@@ -2,12 +2,25 @@ import type OpenAI from 'openai';
 
 import { askLLM } from '@/lib/llm';
 
-export const maxDuration = 60;
+export const maxDuration = 120;
 
 function formatLlmError(err: unknown): string {
-  if (err && typeof err === 'object' && 'message' in err) {
-    const m = (err as { message?: string }).message;
-    if (typeof m === 'string' && m.trim()) return m.trim();
+  // OpenAI SDK 风格的 API 错误（Kimi/Moonshot 兼容 OpenAI 协议）
+  if (err && typeof err === 'object') {
+    const e = err as Record<string, unknown>;
+    const status = typeof e.status === 'number' ? e.status : null;
+    const msg = typeof e.message === 'string' ? e.message.trim() : null;
+
+    if (status === 401) {
+      return 'API Key 鉴权失败（401）。请前往 platform.moonshot.cn 确认 Key 仍有效、余额充足，更新 .env.local 后重启 dev server。';
+    }
+    if (status === 429) {
+      return 'API 请求频率超限（429）。请稍等几秒后重试，或检查账户用量配额。';
+    }
+    if (status === 503 || status === 529) {
+      return 'Kimi 服务暂时过载（' + String(status) + '），请稍后重试。';
+    }
+    if (msg) return msg;
   }
   if (err instanceof Error && err.message) return err.message;
   return '模型服务暂时不可用，请稍后重试。';
@@ -55,12 +68,24 @@ export async function POST(req: Request) {
 
   const readable = new ReadableStream({
     async start(controller) {
+      let finishReason: string | null = null;
       try {
         for await (const chunk of stream) {
-          const text = chunk.choices[0]?.delta?.content;
+          const choice = chunk.choices[0];
+          const text = choice?.delta?.content;
           if (text) {
             controller.enqueue(encoder.encode(text));
           }
+          if (choice?.finish_reason) {
+            finishReason = choice.finish_reason;
+          }
+        }
+        if (finishReason === 'length') {
+          controller.enqueue(
+            encoder.encode(
+              '\n\n---\n⚠️ 回复因长度上限被截断。可在 .env.local 设置 KIMI_MODEL=moonshot-v1-128k 或增大 KIMI_MAX_TOKENS 后重启。',
+            ),
+          );
         }
         controller.close();
       } catch (err) {

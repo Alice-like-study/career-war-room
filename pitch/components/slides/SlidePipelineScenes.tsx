@@ -165,13 +165,14 @@ const agentTooltipMap: Record<string, string> = {
   ),
 };
 
-export function PipelineFlowDiagram() {
+export function SlidePipelineScenes() {
   const [activeSceneId, setActiveSceneId] = useState<PipelineScene["id"]>("full");
   const [isVisible, setIsVisible] = useState(true);
-  const [isBooting, setIsBooting] = useState(true);
 
-  const activeScene = useMemo(() => scenes.find((scene) => scene.id === activeSceneId) ?? scenes[0], [activeSceneId]);
-  const contentVisible = !isBooting && isVisible;
+  const activeScene = useMemo(
+    () => scenes.find((scene) => scene.id === activeSceneId) ?? scenes[0],
+    [activeSceneId]
+  );
 
   useEffect(() => {
     if (isVisible) {
@@ -181,31 +182,24 @@ export function PipelineFlowDiagram() {
     return () => window.clearTimeout(timer);
   }, [activeSceneId, isVisible]);
 
-  useEffect(() => {
-    const timer = window.setTimeout(() => setIsBooting(false), 500);
-    return () => window.clearTimeout(timer);
-  }, []);
-
   const onSwitchScene = (sceneId: PipelineScene["id"]) => {
     if (sceneId === activeSceneId) {
       return;
     }
     setIsVisible(false);
-    window.setTimeout(() => {
-      setActiveSceneId(sceneId);
-    }, 170);
+    window.setTimeout(() => setActiveSceneId(sceneId), 170);
   };
 
   return (
-    <div className="w-full space-y-6 sm:space-y-7">
-      <header className="text-center opacity-0 [animation:pipeline-title-in_420ms_ease-out_forwards]">
-        <h2 className="text-2xl font-bold text-ink sm:text-3xl">三大求职场景演示</h2>
-        <p className="mx-auto mt-3 max-w-3xl text-base font-semibold text-ink/80 sm:text-lg">
+    <section className="paper-texture flex h-full w-full flex-col px-8 py-6 xl:px-12 xl:py-7">
+      <header className="animate-pipeline-title shrink-0 text-center opacity-0">
+        <h2 className="text-2xl font-bold text-ink xl:text-3xl">三大求职场景演示</h2>
+        <p className="mx-auto mt-2 max-w-3xl text-sm font-semibold text-ink/70 xl:text-base">
           点击场景,查看 6 位 Agent 如何协同完成完整求职闭环
         </p>
       </header>
 
-      <div className="grid gap-3 sm:grid-cols-3">
+      <div className="mx-auto mt-4 grid w-full max-w-5xl shrink-0 gap-3 sm:grid-cols-3">
         {scenes.map((scene, tabIndex) => {
           const active = scene.id === activeSceneId;
           return (
@@ -214,20 +208,20 @@ export function PipelineFlowDiagram() {
               type="button"
               onClick={() => onSwitchScene(scene.id)}
               className={[
-                "relative flex items-center justify-center gap-2 rounded-2xl border px-4 py-3 text-sm font-bold opacity-0 transition-all duration-200 sm:text-base [animation:pipeline-fade-in_300ms_ease-out_forwards]",
+                "animate-pipeline-fade relative flex items-center justify-center gap-2 rounded-2xl border px-4 py-2.5 text-sm font-bold opacity-0 transition-all duration-200 sm:text-base",
                 active
                   ? "translate-y-[-2px] border-[#8B2C2C] bg-[#8B2C2C] text-[#F5EDD8] shadow-[0_5px_10px_rgba(61,40,23,0.14)]"
                   : "paper-texture border-[#8B2C2C] text-[#8B2C2C] hover:-translate-y-0.5 hover:bg-[#fff7ea]",
               ].join(" ")}
-              aria-pressed={active}
               style={{ animationDelay: `${100 + tabIndex * 100}ms` }}
+              aria-pressed={active}
             >
               <span aria-hidden className="inline-flex -rotate-6 text-[17px] leading-none">
                 {scene.icon}
               </span>
               <span>{scene.tabLabel}</span>
               <span
-                className={`absolute inset-x-0 bottom-0 h-[3px] rounded-b-2xl bg-[#C74747] transition-transform duration-300 ease-out ${
+                className={`absolute inset-x-0 bottom-0 h-[3px] origin-left rounded-b-2xl bg-[#C74747] transition-transform duration-300 ease-out ${
                   active ? "scale-x-100" : "scale-x-0"
                 }`}
               />
@@ -237,29 +231,31 @@ export function PipelineFlowDiagram() {
       </div>
 
       <div
-        className={[
-          "paper-texture rounded-2xl border border-ink/10 p-3 transition-opacity duration-[250ms] ease-out sm:p-4",
-          contentVisible ? "opacity-100" : "opacity-0",
-        ].join(" ")}
+        className={`mx-auto mt-4 flex min-h-0 w-full max-w-5xl flex-1 flex-col overflow-hidden rounded-2xl border border-ink/10 bg-paper/60 p-3 transition-opacity duration-[250ms] ease-out sm:p-4 ${
+          isVisible ? "opacity-100" : "opacity-0"
+        }`}
       >
-        <div className="rounded-xl bg-[#8B2C2C] px-5 py-4 text-[#F5EDD8] sm:px-6 sm:py-5">
-          <h4 className="text-xl font-bold sm:text-2xl">{activeScene.bannerTitle}</h4>
-          <p className="mt-2 text-sm font-semibold text-[#F5EDD8]/90 sm:text-base">{activeScene.bannerSubtitle}</p>
+        <div className="shrink-0 rounded-xl bg-[#8B2C2C] px-5 py-3.5 text-[#F5EDD8]">
+          <h4 className="text-lg font-bold xl:text-xl">{activeScene.bannerTitle}</h4>
+          <p className="mt-1.5 text-sm font-semibold text-[#F5EDD8]/90">{activeScene.bannerSubtitle}</p>
         </div>
 
-        <div className="mt-3 rounded-xl border border-ink/10 bg-[#fffbf5] px-4 py-2 sm:mt-4 sm:px-6 sm:py-3">
+        <div
+          key={activeScene.id}
+          className="mt-3 min-h-0 flex-1 overflow-y-auto rounded-xl border border-ink/10 bg-[#fffbf5] px-4 py-1 sm:px-5"
+        >
           {activeScene.steps.map((step, index) => (
             <article
               key={`${activeScene.id}-${step.id}`}
               className={[
-                "group relative flex gap-3 px-1 py-4 opacity-0 transition-colors duration-200 before:absolute before:bottom-2 before:left-0 before:top-2 before:w-0 before:rounded-r before:bg-[#7B1E22] before:content-[''] hover:bg-[rgba(245,239,230,0.2)] hover:before:w-1 sm:gap-4 sm:px-2",
+                "group relative flex gap-3 px-1 py-3 opacity-0 transition-colors duration-200 sm:gap-4 sm:px-2",
+                "animate-pipeline-step before:absolute before:bottom-2 before:left-0 before:top-2 before:w-0 before:rounded-r before:bg-[#7B1E22] before:content-[''] hover:bg-[rgba(245,239,230,0.4)] hover:before:w-1",
                 index > 0 ? "border-t border-ink/10" : "",
-                contentVisible ? "[animation:pipeline-step-in_360ms_ease-out_forwards]" : "",
               ].join(" ")}
               style={{ animationDelay: `${index * 60}ms` }}
             >
               <div className="relative flex w-8 shrink-0 justify-center">
-                <span className="mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#8B2C2C] text-sm font-bold text-[#F5EDD8] transition-all duration-200 group-hover:scale-[1.08] group-hover:bg-[#6E1A1D]">
+                <span className="z-10 inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#8B2C2C] text-sm font-bold text-[#F5EDD8] transition-all duration-200 group-hover:scale-[1.08] group-hover:bg-[#6E1A1D]">
                   {step.id}
                 </span>
                 {index < activeScene.steps.length - 1 ? (
@@ -279,43 +275,25 @@ export function PipelineFlowDiagram() {
                       key={`${step.id}-${agent}`}
                       title={agentTooltipMap[agent]}
                       className={[
-                        "group/agent relative inline-flex rounded-full border px-2.5 py-0.5 text-[11px] font-bold tracking-[0.03em] transition-transform duration-200 hover:scale-105 sm:text-xs",
-                        "animate-agent-breathe",
+                        "group/agent animate-pipeline-breathe relative inline-flex rounded-full border px-2.5 py-0.5 text-[11px] font-bold tracking-[0.03em] transition-transform duration-200 hover:scale-105 sm:text-xs",
                         agentTagClassMap[agent] ?? "bg-[#f7efe1] border-[#8b2c2c]/35 text-[#8b2c2c]",
                       ].join(" ")}
-                      style={{
-                        animationDelay: `${((index * 7 + agent.charCodeAt(0)) % 20) / 10}s`,
-                      }}
+                      style={{ animationDelay: `${((index * 7 + agent.charCodeAt(0)) % 20) / 10}s` }}
                     >
                       {agent}
-                      <span className="pointer-events-none absolute left-1/2 top-[-6px] z-10 hidden -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-md bg-[#2C1F18] px-2 py-1 text-[11px] font-semibold text-[#FFFDF9] shadow-lg group-hover/agent:block">
+                      <span className="pointer-events-none absolute left-1/2 top-[-6px] z-20 hidden -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-md bg-[#2C1F18] px-2 py-1 text-[11px] font-semibold text-[#FFFDF9] shadow-lg group-hover/agent:block">
                         {agentTooltipMap[agent] ?? `${agent}：待命中`}
                       </span>
                     </span>
                   ))}
                 </div>
-                <h5 className="mt-2 text-[16px] font-bold leading-relaxed text-ink">{step.title}</h5>
-                <p className="mt-1 text-[14px] leading-relaxed text-ink/85">{step.description}</p>
+                <h5 className="mt-1.5 text-[15px] font-bold leading-relaxed text-ink">{step.title}</h5>
+                <p className="mt-1 text-[13px] leading-relaxed text-ink/85">{step.description}</p>
               </div>
             </article>
           ))}
         </div>
       </div>
-      <style jsx global>{`
-        @keyframes pipeline-title-in { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes pipeline-fade-in { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes pipeline-step-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes pipeline-agent-breathe { 0%, 100% { border-color: rgba(123, 30, 34, 0.33); } 50% { border-color: rgba(123, 30, 34, 0.37); } }
-        @keyframes pipeline-dot-flow { from { top: 0; opacity: 0.4; } 20% { opacity: 0.7; } to { top: calc(100% - 4px); opacity: 0.15; } }
-        .animate-agent-breathe { animation: pipeline-agent-breathe 4s ease-in-out infinite; }
-        .pipeline-flow-dot { animation: pipeline-dot-flow 1.8s linear infinite; }
-        @media (prefers-reduced-motion: reduce) {
-          .animate-agent-breathe,
-          .pipeline-flow-dot {
-            animation: none !important;
-          }
-        }
-      `}</style>
-    </div>
+    </section>
   );
 }

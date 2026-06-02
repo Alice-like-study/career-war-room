@@ -45,7 +45,7 @@ export function PainVsSolutionSection() {
           </article>
 
           <article className="paper-texture mt-10 rounded-2xl border-2 border-[#8B2C2C] p-6 sm:p-8">
-            <h2 className="text-2xl font-bold text-ink sm:text-3xl">EasyClaw 作战部的解法</h2>
+            <h2 className="text-2xl font-bold text-ink sm:text-3xl">Career War Room 的解法</h2>
             <ul className="mt-6 space-y-4">
               {solutions.map((solution) => (
                 <li key={solution} className="flex items-start gap-3">
